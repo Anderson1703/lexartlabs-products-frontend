@@ -167,3 +167,20 @@ export const getOneProductsService = async (productUUID: string) => {
 
     return response.json();
 };
+
+export const getAllProductsLogsService = async () => {
+    const response = await fetch(`${baseUrl}/products-logs`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': localStorage.getItem("x-access-token") || "",
+        },
+    });
+
+    if (!response.ok) {
+        const res = await response.json();
+        throw res;
+    }
+
+    return response.json();
+};
