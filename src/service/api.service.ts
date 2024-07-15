@@ -1,5 +1,8 @@
 import { InputsLoginUserFormI } from "../components/features/auth/login/login-user-form/login-user-form.interface";
 import { InputsCreateUserFormI } from "../components/features/auth/register/create-user-form/create-user-form.interface";
+import { InputsCreateProductFormI } from "../components/features/products/create-product-form/create-product-form.interface";
+import { InputsUpdateProductFormI } from "../components/features/products/update-product-form/update-product-form.interface";
+import { GetAllProductsFilters } from "./service.interface";
 
 const baseUrl: string = "https://lexartlabs-products-backend.onrender.com/api";
 const accessToken = localStorage.getItem("x-access-token")
@@ -14,7 +17,8 @@ export const createUserService = async (userData: InputsCreateUserFormI) => {
     });
 
     if (!response.ok) {
-        throw await response.json();
+        const res = await response.json();
+        throw res;
     }
 
     return response.json();
@@ -30,29 +34,19 @@ export const loginUserService = async (userData: InputsLoginUserFormI) => {
     });
 
     if (!response.ok) {
-        throw await response.json();
+        const res = await response.json();
+        throw res;
     }
 
     return response.json();
 };
 
-export const getAllProductsService = async (offset: number, limit: number, releaseDate?: string, priceFrom?: number, priceTo?: number) => {
-    
+export const getAllProductsService = async (paramsProps: GetAllProductsFilters) => {
+
     const params = new URLSearchParams({
-        limit: limit.toString(),
-        offset: offset.toString(),
+        limit: paramsProps.limit.toString(),
+        offset: paramsProps.offset.toString(),
     });
-
-    if (releaseDate) {
-        params.append('releaseDate', releaseDate);
-    }
-    if (priceFrom !== undefined) {
-        params.append('priceFrom', priceFrom.toString());
-    }
-
-    if (priceTo !== undefined) {
-        params.append('priceTo', priceTo.toString());
-    }
 
     const url = `${baseUrl}/products?${params.toString()}`;
 
@@ -65,7 +59,111 @@ export const getAllProductsService = async (offset: number, limit: number, relea
     });
 
     if (!response.ok) {
-        throw await response.json();
+        const res = await response.json();
+        throw res;
+    }
+
+    return response.json();
+};
+
+export const deleteOneProductsService = async (productUUID: string) => {
+    const response = await fetch(`${baseUrl}/products/${productUUID}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': accessToken!,
+        },
+    });
+
+    if (!response.ok) {
+        const res = await response.json();
+        if (res.status === 406) {
+            localStorage.removeItem('x-access-token');
+        }
+        throw res;
+    }
+
+    return response.json();
+};
+
+export const deleteAllProductsService = async () => {
+    const response = await fetch(`${baseUrl}/products`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': accessToken!,
+        },
+    });
+
+   if (!response.ok) {
+        const res = await response.json();
+        if (res.status === 406) {
+            localStorage.removeItem('x-access-token');
+        }
+        throw res;
+    }
+
+    return response.json();
+};
+
+export const createProductService = async (data: InputsCreateProductFormI) => {
+    const response = await fetch(`${baseUrl}/products`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': accessToken!,
+        },
+        body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+        const res = await response.json();
+        if (res.status === 406) {
+            localStorage.removeItem('x-access-token');
+        }
+        throw res;
+    }
+
+    return response.json();
+};
+
+
+export const updateProductService = async ( data: InputsUpdateProductFormI & {productUUID: string}) => {
+    const response = await fetch(`${baseUrl}/products/${data.productUUID}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': accessToken!,
+        },
+        body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+        const res = await response.json();
+        if (res.status === 406) {
+            localStorage.removeItem('x-access-token');
+        }
+        throw res;
+    }
+
+    return response.json();
+};
+
+export const getOneProductsService = async (productUUID: string) => {
+    const response = await fetch(`${baseUrl}/products/${productUUID}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': accessToken!,
+        },
+    });
+
+    if (!response.ok) {
+        const res = await response.json();
+        if (res.status === 406) {
+            localStorage.removeItem('x-access-token');
+        }
+        throw res;
     }
 
     return response.json();

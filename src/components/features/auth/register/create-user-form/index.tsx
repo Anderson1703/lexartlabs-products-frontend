@@ -13,7 +13,7 @@ export default function CreateUserForm({ handleCreateUser, isLoading }: CreateUs
   return (
     <form onSubmit={handleSubmit(handleCreateUser)} className="space-y-4 md:space-y-6">
       <div>
-        <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+        <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
           First Name
         </label>
         <input
@@ -26,7 +26,7 @@ export default function CreateUserForm({ handleCreateUser, isLoading }: CreateUs
       </div>
       {errors.name && <p>First name is required.</p>}
       <div>
-        <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+        <label htmlFor="lastName" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
           Last Name
         </label>
         <input

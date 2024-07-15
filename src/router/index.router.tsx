@@ -22,8 +22,9 @@ export default function Router() {
                         <Route path="login" element={<LoginPage />} />
                         <Route path="register" element={<RegisterPage />} />
                     </Route>
-                    <Route path="/products" element={<ProductsPage />} >
-                        <Route path=":productUUID" element={<ProductDetailsPage />} />
+                    <Route path="/products" >
+                        <Route path="" element={<ProductsPage />} />
+                        <Route path=":productUUID/details" element={<ProductDetailsPage />} />
                     </Route>
                     <Route path="/products-logs" element={<ProductsLogsPage />} />
                 </Routes>

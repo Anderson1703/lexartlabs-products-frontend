@@ -1,9 +1,8 @@
-import React from 'react'
 import { ProductI } from '../products.interface'
 
 export default function ProductItem(
     product: ProductI & {
-        handleUpdate: (productUUID: string) => void,
+        handleUpdate: (product: ProductI) => void,
         handleDelete: (productUUID: string) => void
     }) {
     return (
@@ -21,9 +20,11 @@ export default function ProductItem(
                 {product.release_date}
             </td>
             <td className="px-6 py-4">
-
+                <a
+                    className="ml-2 font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    href={`/products/${product.uuid}/details`}>DETAILS</a>
                 <button
-                    onClick={() => product.handleUpdate(product.uuid)}
+                    onClick={() => product.handleUpdate(product)}
                     className="ml-2 font-medium text-blue-600 dark:text-blue-500 hover:underline"
                 >
                     UPDATE

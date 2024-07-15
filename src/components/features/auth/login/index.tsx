@@ -12,16 +12,18 @@ export default function LoginComponent() {
   const { mutate, isLoading } = useMutation(loginUserService, {
     onSuccess: ({ body }) => {
       toast.success("Login successful!");
-      handleSetTokenInsideLocalStorage(body.token as string);
+      localStorage.setItem("x-access-token", body.token);
+      handleGoToProducts();    
     },
     onError: ({ body }: any) => {
       toast.error(`Try again  ${body.error.message}`);
     }
   });
 
-  const handleSetTokenInsideLocalStorage = (token: string) => {
-    localStorage.setItem("x-access-token", token);
-    navigate("/products");
+  const handleGoToProducts =  () => {
+    if (localStorage.getItem("x-access-token")) {
+      navigate("/products");
+    }
   }
 
   const handleLoginUser = (data: InputsLoginUserFormI) => {

@@ -1,7 +1,9 @@
-import React from 'react'
+import ProductsLogsComponent from '../../components/features/products-logs'
 
 export default function ProductsLogsPage() {
   return (
-    <div>ProductsLogsPage</div>
+    <div>
+      <ProductsLogsComponent />
+    </div>
   )
 }

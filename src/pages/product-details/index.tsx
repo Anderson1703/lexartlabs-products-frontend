@@ -1,7 +1,9 @@
-import React from 'react'
+import ProductDetailComponent from '../../components/features/products-details'
 
 export default function ProductDetailsPage() {
   return (
-    <div>index</div>
+    <div>
+      <ProductDetailComponent />
+    </div>
   )
 }
