@@ -5,7 +5,6 @@ import { InputsUpdateProductFormI } from "../components/features/products/update
 import { GetAllProductsFilters } from "./service.interface";
 
 const baseUrl: string = "https://lexartlabs-products-backend.onrender.com/api";
-const accessToken = localStorage.getItem("x-access-token")
 
 export const createUserService = async (userData: InputsCreateUserFormI) => {
     const response = await fetch(`${baseUrl}/auth/register`, {
@@ -54,7 +53,7 @@ export const getAllProductsService = async (paramsProps: GetAllProductsFilters) 
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'x-access-token': accessToken!,
+            'x-access-token': localStorage.getItem("x-access-token") || "",
         },
     });
 
@@ -71,7 +70,7 @@ export const deleteOneProductsService = async (productUUID: string) => {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
-            'x-access-token': accessToken!,
+            'x-access-token': localStorage.getItem("x-access-token") || "",
         },
     });
 
@@ -91,11 +90,11 @@ export const deleteAllProductsService = async () => {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
-            'x-access-token': accessToken!,
+            'x-access-token': localStorage.getItem("x-access-token") || "",
         },
     });
 
-   if (!response.ok) {
+    if (!response.ok) {
         const res = await response.json();
         if (res.status === 406) {
             localStorage.removeItem('x-access-token');
@@ -111,7 +110,7 @@ export const createProductService = async (data: InputsCreateProductFormI) => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'x-access-token': accessToken!,
+            'x-access-token': localStorage.getItem("x-access-token") || "",
         },
         body: JSON.stringify(data),
     });
@@ -128,12 +127,12 @@ export const createProductService = async (data: InputsCreateProductFormI) => {
 };
 
 
-export const updateProductService = async ( data: InputsUpdateProductFormI & {productUUID: string}) => {
+export const updateProductService = async (data: InputsUpdateProductFormI & { productUUID: string }) => {
     const response = await fetch(`${baseUrl}/products/${data.productUUID}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
-            'x-access-token': accessToken!,
+            'x-access-token': localStorage.getItem("x-access-token") || "",
         },
         body: JSON.stringify(data),
     });
@@ -154,7 +153,7 @@ export const getOneProductsService = async (productUUID: string) => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'x-access-token': accessToken!,
+            'x-access-token': localStorage.getItem("x-access-token") || "",
         },
     });
 
