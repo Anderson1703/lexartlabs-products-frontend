@@ -1,7 +1,9 @@
-import React from 'react'
+import ProductsComponent from '../../components/features/products'
 
 export default function ProductsPage() {
   return (
-    <div>index</div>
+    <div>
+      <ProductsComponent />
+    </div>
   )
 }
